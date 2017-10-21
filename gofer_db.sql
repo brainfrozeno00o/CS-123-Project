@@ -22,7 +22,7 @@ create table favor(
 	favor_id int not null unique primary key auto_increment,
 	issued_by int not null,
 	description varchar(500) not null default '',
-	location varchar(500) not null,
+	favor_location varchar(500) not null,
 	datetime_issued datetime not null default current_timestamp,
 	intial_payment decimal(10,2) not null default 0.00,
 

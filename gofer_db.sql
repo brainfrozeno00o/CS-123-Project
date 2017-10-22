@@ -12,7 +12,7 @@ create table user(
 );
 
 create table credentials(
-	user_id int not null unique primary key,
+	user_id int not null unique primary key auto_increment,
 	password varchar(16) not null,
 
 	foreign key(user_id) references user(user_id)

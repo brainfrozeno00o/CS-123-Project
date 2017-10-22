@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text, View, Button } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Button } from 'react-native';
 import { logout } from '../redux/actions/auth';
  
 class Secured extends Component {
@@ -11,7 +11,7 @@ class Secured extends Component {
      
     render() {
         return (
-            <ScrollView style={{padding: 20}}>
+            <ScrollView style={styles.scroll}>
                 <Text style={{fontSize: 27}}>
                     {`Welcome ${this.props.username}`}
                 </Text>
@@ -34,5 +34,13 @@ const mapDispatchToProps = (dispatch) => {
         onLogout: () => { dispatch(logout()); }
     }
 }
+
+const styles = StyleSheet.create({
+    scroll: {
+        backgroundColor: '#84cae7',
+        padding: 30,
+        flexDirection: 'column'
+    },
+});
  
 export default connect(mapStateToProps, mapDispatchToProps)(Secured);

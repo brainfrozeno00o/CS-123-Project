@@ -21,7 +21,6 @@ export default class SignUpForm extends Component {
 								<TextInput 
 									placeholder="First name"
 									placeholderTextColor="rgba(255,255,255,0.7)"
-									returnKeyType="next"
 									autoCorrect={false}
 									style={styles.input}
 								/>
@@ -31,7 +30,6 @@ export default class SignUpForm extends Component {
 								<TextInput 
 									placeholder="Last name"
 									placeholderTextColor="rgba(255,255,255,0.7)"
-									returnKeyType="next"
 									autoCorrect={false}
 									style={styles.input}
 								/>
@@ -40,8 +38,15 @@ export default class SignUpForm extends Component {
 					<TextInput
 						placeholder="Email"
 						placeholderTextColor="rgba(255,255,255,0.7)"
-						returnKeyType="next"
 						keyboardType="email-address"
+						autoCapitalize="none"
+						autoCorrect={false}
+						style={styles.input}
+					/>
+					<TextInput
+						placeholder="Mobile Number"
+						placeholderTextColor="rgba(255,255,255,0.7)"
+						keyboardType="phone-pad"
 						autoCapitalize="none"
 						autoCorrect={false}
 						style={styles.input}
@@ -49,10 +54,18 @@ export default class SignUpForm extends Component {
 					<TextInput 
 						placeholder="Password"
 						placeholderTextColor="rgba(255,255,255,0.7)"
-						returnKeyType="go"
+						autoCapitalize="none"
+						autoCorrect={false}
 						secureTextEntry
 						style={styles.input}
-						ref={(input) => this.passwordInput = input}
+					/>
+					<TextInput 
+						placeholder="Confirm password"
+						placeholderTextColor="rgba(255,255,255,0.7)"
+						autoCapitalize="none"
+						autoCorrect={false}
+						secureTextEntry
+						style={styles.input}
 					/>
 					<TouchableOpacity 
 						style={styles.buttonContainer}>

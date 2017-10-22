@@ -4,13 +4,46 @@ import { Alert, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpac
 export default class SignUpForm extends Component {
 	constructor(props){
 		super(props);
-		this.InsertUser = this.InsertUser.bind(this);
-		this.state = {u_name: '', l_name: '', f_name: '', e_mail: '', digits: '', pword: ''};
+		//this.InsertUser = this.InsertUser.bind(this);
+		this.state = {u_name: '', l_name: '', f_name: '', e_mail: '', digits: '', p_word: '', cp_word: ''};
 	}
 
+	CheckTextInputIsEmptyOrNot = () => {
+		const { u_name } = this.state;
+		const { l_name } = this.state;
+		const { f_name } = this.state;
+		const { e_mail } = this.state;
+		const { digits } = this.state;
+		const { p_word } = this.state;
+		const { cp_word } = this.state;
+
+		if(u_name == '' || l_name == '' || f_name == '' || e_mail == '' || p_word == '') {
+			Alert.alert("You have not filled in all required fields.");
+		}
+		else if(p_word !== cp_word) {
+			Alert.alert("The passwords you have inputted do not match.");
+		}
+		else {
+			fetch('http://192.168.0.42/insertUser.php',{
+			method: 'POST',
+		  	headers:{
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({
+			user_name: this.state.u_name,
+			last_name: this.state.l_name,
+			first_name: this.state.f_name,
+			email: this.state.e_mail,
+			phone_number: this.state.digits,
+			password: this.state.p_word
+		  })//printing to console that will say the unexpected EOF error
+		}).then((response) => response.json()).then(Alert.alert("Succesfully made an account!")).catch((error) =>{console.log(error)}).done();
+		}
+	}
 	//192.168.254.101 is my local ip address, please change it to your respective local ip address if you want to test 
-	InsertUser(){
-		fetch('http://192.168.2.102/insertUser.php',{
+/*	InsertUser(){
+		fetch('http://192.168.0.42/insertUser.php',{
 		  method: 'POST',
 		  headers:{
 			'Accept': 'application/json',
@@ -22,11 +55,10 @@ export default class SignUpForm extends Component {
 			first_name: this.state.f_name,
 			email: this.state.e_mail,
 			phone_number: this.state.digits,
-			password: this.state.pword
+			password: this.state.p_word
 		  })//printing to console that will say the unexpected EOF error
 		}).then((response) => response.json()).then(Alert.alert("Succesfully made an account!")).catch((error) =>{console.log(error)}).done();
-	}
-
+	} */
 
 	render() {
 		return (
@@ -101,6 +133,7 @@ export default class SignUpForm extends Component {
 						secureTextEntry
 						underlineColorAndroid='transparent'
 						style={styles.input}
+						onChangeText={p_word => this.setState({p_word})}
 					/>
 					<TextInput 
 						placeholder="Confirm password"
@@ -110,14 +143,14 @@ export default class SignUpForm extends Component {
 						secureTextEntry
 						underlineColorAndroid='transparent'
 						style={styles.input}
-						onChangeText={pword => this.setState({pword})}
+						onChangeText={cp_word => this.setState({cp_word})}
 					/>
 					<TouchableOpacity 
 						style={styles.buttonContainer}>
 						<Text
-							onPress={this.InsertUser} 
+							onPress={this.CheckTextInputIsEmptyOrNot} 
 							style={styles.buttonText}>
-							REGISTER 
+							CREATE ACCOUNT
 						</Text>
 					</TouchableOpacity>
 					<Text 
@@ -143,7 +176,7 @@ const styles = StyleSheet.create ({
 		backgroundColor: '#3498db'
 	},
 	title: {
-		marginTop: 50,
+		marginTop: 40,
 		textAlign: 'center',
 		fontSize: 30,
 		fontWeight: 'bold',

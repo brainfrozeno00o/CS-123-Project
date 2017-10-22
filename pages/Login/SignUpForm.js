@@ -2,6 +2,31 @@ import React, { Component } from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
 
 export default class SignUpForm extends Component {
+	constructor(props){
+		super(props);
+		this.InsertUser = this.InsertUser.bind(this);
+		this.state = {u_name: '', l_name: '', f_name: '', e_mail: '', digits: '', pword: ''};
+	}
+
+	//192.168.254.101 is my local ip address, please change it to your respective local ip address if you want to test 
+	InsertUser(){
+		fetch('http://192.168.2.102/insertUser.php',{
+		  method: 'POST',
+		  headers:{
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({
+			user_name: this.state.u_name,
+			last_name: this.state.l_name,
+			first_name: this.state.f_name,
+			email: this.state.e_mail,
+			phone_number: this.state.digits,
+			password: this.state.pword
+		  })//printing to console that will say the unexpected EOF error
+		}).then((response) => response.json()).then(Alert.alert("Succesfully made an account!")).catch((error) =>{console.log(error)}).done();
+	}
+
 
 	render() {
 		return (
@@ -14,6 +39,15 @@ export default class SignUpForm extends Component {
 				</Text>
 				<View
 					style={styles.infoContainer}>
+					<TextInput
+						placeholder="User Name"
+						placeholderTextColor="rgba(255,255,255,0.7)"
+						autoCapitalize="none"
+						autoCorrect={false}
+						underlineColorAndroid='transparent'
+						style={styles.input}
+						onChangeText={u_name => this.setState({u_name})}
+					/>
 					<View
 						style={styles.bigNameContainer}>
 						<View
@@ -22,7 +56,9 @@ export default class SignUpForm extends Component {
 									placeholder="First name"
 									placeholderTextColor="rgba(255,255,255,0.7)"
 									autoCorrect={false}
+									underlineColorAndroid='transparent'
 									style={styles.input}
+									onChangeText={f_name => this.setState({f_name})}
 								/>
 						</View>
 						<View
@@ -31,7 +67,9 @@ export default class SignUpForm extends Component {
 									placeholder="Last name"
 									placeholderTextColor="rgba(255,255,255,0.7)"
 									autoCorrect={false}
+									underlineColorAndroid='transparent'
 									style={styles.input}
+									onChangeText={l_name => this.setState({l_name})}
 								/>
 						</View>
 					</View>
@@ -41,15 +79,19 @@ export default class SignUpForm extends Component {
 						keyboardType="email-address"
 						autoCapitalize="none"
 						autoCorrect={false}
+						underlineColorAndroid='transparent'
 						style={styles.input}
+						onChangeText={e_mail => this.setState({e_mail})}
 					/>
 					<TextInput
-						placeholder="Mobile Number"
+						placeholder="Mobile Number w/o 0"
 						placeholderTextColor="rgba(255,255,255,0.7)"
 						keyboardType="phone-pad"
 						autoCapitalize="none"
 						autoCorrect={false}
+						underlineColorAndroid='transparent'
 						style={styles.input}
+						onChangeText={digits => this.setState({digits})}
 					/>
 					<TextInput 
 						placeholder="Password"
@@ -57,6 +99,7 @@ export default class SignUpForm extends Component {
 						autoCapitalize="none"
 						autoCorrect={false}
 						secureTextEntry
+						underlineColorAndroid='transparent'
 						style={styles.input}
 					/>
 					<TextInput 
@@ -65,11 +108,14 @@ export default class SignUpForm extends Component {
 						autoCapitalize="none"
 						autoCorrect={false}
 						secureTextEntry
+						underlineColorAndroid='transparent'
 						style={styles.input}
+						onChangeText={pword => this.setState({pword})}
 					/>
 					<TouchableOpacity 
 						style={styles.buttonContainer}>
-						<Text 
+						<Text
+							onPress={this.InsertUser} 
 							style={styles.buttonText}>
 							REGISTER 
 						</Text>

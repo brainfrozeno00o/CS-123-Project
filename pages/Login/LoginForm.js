@@ -20,6 +20,7 @@ export default class LoginForm extends Component {
 						keyboardType="email-address"
 						autoCapitalize="none"
 						autoCorrect={false}
+						underlineColorAndroid='transparent'
 						style={styles.input}
 					/>
 					<TextInput 
@@ -28,6 +29,7 @@ export default class LoginForm extends Component {
 						returnKeyType="go"
 						secureTextEntry
 						style={styles.input}
+						underlineColorAndroid='transparent'
 						ref={(input) => this.passwordInput = input}
 					/>
 					<TouchableOpacity 

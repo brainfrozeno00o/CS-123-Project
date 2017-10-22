@@ -12,11 +12,11 @@ export default class Login extends Component {
 					style={styles.logoContainer}>
 					<Image 
 						style={styles.logo}
-						source={require('../Images/feelsgoodman.jpg')} 
+						source={require('../Images/TempLogo.png')} 
 					/>
 					<Text 
 						style={styles.title}>
-						Some catchy slogan
+						A work in progress
 					</Text>
 				</View>
 			
@@ -40,8 +40,8 @@ const styles = StyleSheet.create ({
 		justifyContent: 'center'
 	},
 	logo: {
-		width: 150,
-		height: 150
+		width: 149,
+		height: 124
 	},
 	title: {
 		color: '#FFF',

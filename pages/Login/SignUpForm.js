@@ -17,14 +17,14 @@ export default class SignUpForm extends Component {
 		const { p_word } = this.state;
 		const { cp_word } = this.state;
 
-		if(u_name == '' || l_name == '' || f_name == '' || e_mail == '' || p_word == '') {
+		if(u_name === '' || l_name === '' || f_name === '' || e_mail === '' || p_word === '') {
 			Alert.alert("You have not filled in all required fields.");
 		}
 		else if(p_word !== cp_word) {
-			Alert.alert("The passwords you have inputted do not match.");
+			Alert.alert("The passwords you have input do not match.");
 		}
 		else {
-			fetch('http://192.168.0.42/insertUser.php',{
+			fetch('http://192.168.1.185/insertUser.php',{
 			method: 'POST',
 		  	headers:{
 			'Accept': 'application/json',
@@ -38,7 +38,17 @@ export default class SignUpForm extends Component {
 			phone_number: this.state.digits,
 			password: this.state.p_word
 		  })//printing to console that will say the unexpected EOF error
-		}).then((response) => response.json()).then(Alert.alert("Succesfully made an account!")).catch((error) =>{console.log(error)}).done();
+		}).then((response) => response.json())
+		.then(Alert.alert("Succesfully made an account!"))
+		.then(this.refs['user'].setNativeProps({text: ''}))
+		.then(this.refs['fn'].setNativeProps({text: ''}))
+		.then(this.refs['ln'].setNativeProps({text: ''}))
+		.then(this.refs['em'].setNativeProps({text: ''}))
+		.then(this.refs['mn'].setNativeProps({text: ''}))
+		.then(this.refs['pw'].setNativeProps({text: ''}))
+		.then(this.refs['cpw'].setNativeProps({text: ''}))
+		.catch((error) =>{console.log(error)})
+		.done();
 		}
 	}
 	//192.168.254.101 is my local ip address, please change it to your respective local ip address if you want to test 
@@ -72,6 +82,7 @@ export default class SignUpForm extends Component {
 				<View
 					style={styles.infoContainer}>
 					<TextInput
+						ref = {'user'}
 						placeholder="User Name"
 						placeholderTextColor="rgba(255,255,255,0.7)"
 						autoCapitalize="none"
@@ -84,7 +95,8 @@ export default class SignUpForm extends Component {
 						style={styles.bigNameContainer}>
 						<View
 							style={styles.smallNameContainer}>
-								<TextInput 
+								<TextInput
+									ref = {'fn'} 
 									placeholder="First name"
 									placeholderTextColor="rgba(255,255,255,0.7)"
 									autoCorrect={false}
@@ -96,6 +108,7 @@ export default class SignUpForm extends Component {
 						<View
 							style={styles.smallNameContainer}>
 								<TextInput 
+									ref = {'ln'}
 									placeholder="Last name"
 									placeholderTextColor="rgba(255,255,255,0.7)"
 									autoCorrect={false}
@@ -106,6 +119,7 @@ export default class SignUpForm extends Component {
 						</View>
 					</View>
 					<TextInput
+						ref = {'em'}
 						placeholder="Email"
 						placeholderTextColor="rgba(255,255,255,0.7)"
 						keyboardType="email-address"
@@ -116,6 +130,7 @@ export default class SignUpForm extends Component {
 						onChangeText={e_mail => this.setState({e_mail})}
 					/>
 					<TextInput
+						ref = {'mn'}
 						placeholder="Mobile Number w/o 0"
 						placeholderTextColor="rgba(255,255,255,0.7)"
 						keyboardType="phone-pad"
@@ -126,6 +141,7 @@ export default class SignUpForm extends Component {
 						onChangeText={digits => this.setState({digits})}
 					/>
 					<TextInput 
+						ref = {'pw'}
 						placeholder="Password"
 						placeholderTextColor="rgba(255,255,255,0.7)"
 						autoCapitalize="none"
@@ -136,6 +152,7 @@ export default class SignUpForm extends Component {
 						onChangeText={p_word => this.setState({p_word})}
 					/>
 					<TextInput 
+						ref = {'cpw'}
 						placeholder="Confirm password"
 						placeholderTextColor="rgba(255,255,255,0.7)"
 						autoCapitalize="none"

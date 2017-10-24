@@ -4,11 +4,11 @@ use gofer_db;
 
 create table user(
 	user_id int not null unique primary key auto_increment,
-	user_name varchar(20) not null, 
+	user_name varchar(20) not null unique, 
 	last_name varchar(255) not null,
 	first_name varchar(255) not null,
-	email varchar(255) not null,
-	phone_number bigint not null
+	email varchar(255) not null unique,
+	phone_number bigint not null unique
 );
 
 create table credentials(

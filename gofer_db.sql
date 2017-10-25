@@ -4,7 +4,7 @@ use gofer_db;
 
 create table user(
 	user_id int not null unique primary key auto_increment,
-	user_name varchar(20) not null unique, 
+	user_name varchar(255) not null unique, 
 	last_name varchar(255) not null,
 	first_name varchar(255) not null,
 	email varchar(255) not null unique,
@@ -13,7 +13,7 @@ create table user(
 
 create table credentials(
 	user_id int not null unique primary key auto_increment,
-	password varchar(16) not null,
+	password varchar(255) not null,
 
 	foreign key(user_id) references user(user_id)
 );

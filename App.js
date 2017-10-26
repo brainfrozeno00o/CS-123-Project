@@ -5,8 +5,8 @@ import SignUpForm from './pages/Login/SignUpForm';
 import Login from './pages/Login/Login';
  
 const Screens = StackNavigator({
-  Login: {screen: Login},
-  SignUpForm: {screen: SignUpForm},
+  Login: {screen: Login, navigationOptions:{header:null},},
+  SignUpForm: {screen: SignUpForm, navigationOptions:{header:null},},
 });
 
 export default class Gofer extends Component {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
+import '../../App';
 
 export default class SignUpForm extends Component {
 	constructor(props){
@@ -175,7 +176,7 @@ export default class SignUpForm extends Component {
 							Already a member?
 					</Text>
 					<TouchableOpacity
-						onPress={this.signUpPress}>
+						onPress={() => this.props.navigation.goBack()}>
 						<Text
 							style={styles.signupTextPress}>
 							Back to login page.

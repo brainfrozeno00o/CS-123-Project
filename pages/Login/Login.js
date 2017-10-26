@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text,KeyboardAvoidingView } from 'react-native';
+import { AppRegistry, StyleSheet, View, Image, Text,KeyboardAvoidingView } from 'react-native';
 import LoginForm from './LoginForm';
 
 export default class Login extends Component {
@@ -22,12 +22,13 @@ export default class Login extends Component {
 			
 				<View 
 					style={styles.formContainer}>
-					<LoginForm />
+					<LoginForm navigation={this.props.navigation} />
 				</View>
 			</KeyboardAvoidingView>
 		);
 	}
 }
+
 
 const styles = StyleSheet.create ({
 	container: {

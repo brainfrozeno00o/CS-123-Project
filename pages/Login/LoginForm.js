@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Navigator, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { Navigation, AppRegistry, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
+import '../../App';
 
 export default class LoginForm extends Component {
-	signUpPress = () => {
-		Alert.alert("needs sign up page")
-	}
-
 	render() {
 		return (
 				<View style={styles.container}>
@@ -44,7 +41,7 @@ export default class LoginForm extends Component {
 							Not a member yet?
 					</Text>
 					<TouchableOpacity
-						onPress={this.signUpPress}>
+						onPress={() => this.props.navigation.navigate('SignUpForm')}>
 						<Text
 							style={styles.signupTextPress}>
 							Register here.
@@ -54,6 +51,8 @@ export default class LoginForm extends Component {
 		);
 	}
 }
+
+
 
 const styles = StyleSheet.create ({
 	container: {

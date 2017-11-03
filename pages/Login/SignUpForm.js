@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
 import '../../App';
+var bcrypt = require('react-native-bcrypt');
 
 export default class SignUpForm extends Component {
 	constructor(props){
 		super(props);
-		//this.InsertUser = this.InsertUser.bind(this);
 		this.state = {u_name: '', l_name: '', f_name: '', e_mail: '', digits: '', p_word: '', cp_word: ''};
 	}
 
@@ -17,6 +17,7 @@ export default class SignUpForm extends Component {
 		const { digits } = this.state;
 		const { p_word } = this.state;
 		const { cp_word } = this.state;
+		let hash = bcrypt.hashSync(p_word, 8);
 
 		if(u_name === '' || l_name === '' || f_name === '' || e_mail === '' || p_word === '') {
 			Alert.alert("You have not filled in all required fields.");
@@ -32,12 +33,12 @@ export default class SignUpForm extends Component {
 			'Content-Type': 'application/json',
 		  },
 		  body: JSON.stringify({
-			user_name: this.state.u_name,
-			last_name: this.state.l_name,
-			first_name: this.state.f_name,
-			email: this.state.e_mail,
-			phone_number: this.state.digits,
-			password: this.state.p_word
+			user_name: u_name,
+			last_name: l_name,
+			first_name: f_name,
+			email: e_mail,
+			phone_number: digits,
+			password: hash
 		  })//printing to console that will say the unexpected EOF error
 		}).then((response) => response.json())
 		.then(Alert.alert("Succesfully made an account!"))
@@ -53,23 +54,6 @@ export default class SignUpForm extends Component {
 		}
 	}
 	//192.168.254.101 is my local ip address, please change it to your respective local ip address if you want to test 
-/*	InsertUser(){
-		fetch('http://192.168.0.42/insertUser.php',{
-		  method: 'POST',
-		  headers:{
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({
-			user_name: this.state.u_name,
-			last_name: this.state.l_name,
-			first_name: this.state.f_name,
-			email: this.state.e_mail,
-			phone_number: this.state.digits,
-			password: this.state.p_word
-		  })//printing to console that will say the unexpected EOF error
-		}).then((response) => response.json()).then(Alert.alert("Succesfully made an account!")).catch((error) =>{console.log(error)}).done();
-	} */
 
 	render() {
 		return (

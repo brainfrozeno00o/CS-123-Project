@@ -1,8 +1,48 @@
 import React, { Component } from 'react';
-import { Navigation, AppRegistry, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { Alert,Navigation, AppRegistry, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
 import '../../App';
+var bcrypt = require('react-native-bcrypt');
 
 export default class LoginForm extends Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			credential: '',
+			p_word: ''
+		}
+	}
+	LoginFunction = () =>{
+		const{credential} = this.state;
+		const{p_word} = this.state;
+		if(credential === '' || p_word === ''){
+			Alert.alert("Please fill in the necessary fields!");
+		}else{
+			fetch('http://192.168.254.100/loginUser.php',{
+				method: 'POST',
+				headers:{
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					credential: credential
+				})
+			}).then((response) => response.json())
+			.then((responseJson) =>{
+				if(responseJson === "Invalid Username or Email or Password. Please try again!"){
+					Alert.alert(responseJson);
+				}else{
+					var hash = responseJson;
+					if(bcrypt.compareSync(p_word, hash)){
+						Alert.alert("You are now able to log in! =)");//should then navigate to a screen
+					}else{
+						Alert.alert("Invalid Username or Email or Password. Please try again!");
+					}
+				}
+			}).catch((error) => {
+				console.error(error);
+			}).done();
+		}
+	}
 	render() {
 		return (
 				<View style={styles.container}>
@@ -10,7 +50,7 @@ export default class LoginForm extends Component {
 						barStyle="light-content"
 					/>
 					<TextInput 
-						placeholder="Username or Email"
+						placeholder="Username or Email"	
 						placeholderTextColor="rgba(255,255,255,0.7)"
 						returnKeyType="next"
 						onSubmitEditing={() => this.passwordInput.focus()}
@@ -19,6 +59,7 @@ export default class LoginForm extends Component {
 						autoCorrect={false}
 						underlineColorAndroid='transparent'
 						style={styles.input}
+						onChangeText = {credential => this.setState({credential})}
 					/>
 					<TextInput 
 						placeholder="Password"
@@ -28,10 +69,12 @@ export default class LoginForm extends Component {
 						style={styles.input}
 						underlineColorAndroid='transparent'
 						ref={(input) => this.passwordInput = input}
+						onChangeText = {p_word => this.setState({p_word})}
 					/>
 					<TouchableOpacity 
 						style={styles.buttonContainer}>
-						<Text 
+						<Text
+							onPress={this.LoginFunction} 
 							style={styles.buttonText}>
 							LOGIN 
 						</Text>
@@ -85,3 +128,4 @@ const styles = StyleSheet.create ({
 		fontWeight: '900'
 	}
 });
+

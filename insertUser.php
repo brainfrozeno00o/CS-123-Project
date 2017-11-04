@@ -12,8 +12,8 @@
 	$email = $obj['email'];
 	$phone_number = $obj['phone_number'];
 	$password = $obj['password'];
-	$insert = "insert into user(user_name,last_name,first_name,email,phone_number) values ('$user_name','$last_name','$first_name','$email','$phone_number');";
-	$insert .= "insert into credentials(password) values ('$password')";
+	$insert = "insert into user(last_name,first_name,phone_number) values ('$last_name','$first_name','$phone_number');";
+	$insert .= "insert into credentials(user_name,email,password) values ('$user_name','$email','$password');";
 	mysqli_multi_query($connection,$insert);
 	mysqli_close($connection);
 ?>

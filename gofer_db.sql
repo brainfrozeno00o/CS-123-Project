@@ -3,16 +3,16 @@ create database gofer_db;
 use gofer_db;
 
 create table user(
-	user_id int not null unique primary key auto_increment,
-	user_name varchar(255) not null unique, 
+	user_id int not null unique primary key auto_increment, 
 	last_name varchar(255) not null,
 	first_name varchar(255) not null,
-	email varchar(255) not null unique,
 	phone_number bigint not null unique
 );
 
 create table credentials(
 	user_id int not null unique primary key auto_increment,
+	user_name varchar(255) not null unique,
+	email varchar(255) not null unique,
 	password varchar(255) not null,
 
 	foreign key(user_id) references user(user_id)

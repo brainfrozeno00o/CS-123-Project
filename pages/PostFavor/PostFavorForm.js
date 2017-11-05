@@ -5,7 +5,7 @@ import '../../App';
 export default class PostFavorForm extends Component {
 	constructor(props){
 		super(props);
-		this.state = {title: '', desc: '', location: '', datetime: '', payment: ''};
+		this.state = {title: '', desc: '', loc: '', dt: '', pay: ''};
 	}
 
 	CheckTextInputIsEmptyOrNot = () => {
@@ -15,8 +15,34 @@ export default class PostFavorForm extends Component {
 		const { dt } = this.state;
 		const { pay } = this.state;
 
-		if(title === '' || desc === '' || location === '' || datetime === '' || payment === '') {
+		if(title === '' || desc === '' || loc === '' || dt === '' || pay === '') {
 			Alert.alert("You have not filled in all required fields.");
+		}
+
+		else {
+			fetch('http://192.168.2.121/insertFavor.php',{
+				method: 'POST',
+				headers:{
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					title: title,
+					description: desc,
+					location: loc,
+					datetime: dt,
+					payment: pay
+			  })
+				}).then((response) => response.json())
+				.then((responseJson) => {Alert.alert(responseJson);})
+				.then(this.refs['title'].setNativeProps({text: ''}))
+				.then(this.refs['desc'].setNativeProps({text: ''}))
+				.then(this.refs['loc'].setNativeProps({text: ''}))
+				.then(this.refs['dt'].setNativeProps({text: ''}))
+				.then(this.refs['pay'].setNativeProps({text: ''}))
+				
+			.catch((error) =>{console.log(error)}) 
+			.done();
 		}
 	}
 

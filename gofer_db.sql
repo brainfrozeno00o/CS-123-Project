@@ -23,7 +23,8 @@ create table favor(
 	issued_by int not null,
 	description varchar(500) not null default '',
 	favor_location varchar(500) not null,
-	datetime_issued datetime not null default current_timestamp,
+	/*datetime_issued datetime not null default current_timestamp,*/
+	datetime_issued varchar(255) not null, 
 	intial_payment decimal(10,2) not null default 0.00,
 
 	foreign key(issued_by) references user(user_id)
@@ -32,7 +33,8 @@ create table favor(
 create table accepted_favor(
 	favor_id int not null unique primary key,
 	accepted_by int not null,
-	datetime_accepted datetime not null default current_timestamp,
+	/*datetime_accepted datetime not null default current_timestamp,*/
+	datetime_accepted varchar(255) not null,
 
 	foreign key(favor_id) references favor(favor_id),
 	foreign key(accepted_by) references user(user_id)

@@ -17,7 +17,7 @@ export default class LoginForm extends Component {
 		if(credential === '' || p_word === ''){
 			Alert.alert("Please fill in the necessary fields!");
 		}else{
-			fetch('http://192.168.254.100/loginUser.php',{
+			fetch('http://192.168.2.121/loginUser.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',

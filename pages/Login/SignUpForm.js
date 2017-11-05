@@ -9,7 +9,7 @@ export default class SignUpForm extends Component {
 		this.state = {u_name: '', l_name: '', f_name: '', e_mail: '', digits: '', p_word: '', cp_word: ''};
 	}
 
-	CheckTextInputIsEmptyOrNot = () => {
+	CheckTextInputIsEmptyOrNot = () =>{
 		const { u_name } = this.state;
 		const { l_name } = this.state;
 		const { f_name } = this.state;
@@ -26,35 +26,34 @@ export default class SignUpForm extends Component {
 			Alert.alert("The passwords you have input do not match.");
 		}
 		else {
-			fetch('http://192.168.1.185/insertUser.php',{
-			method: 'POST',
-		  	headers:{
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({
-			user_name: u_name,
-			last_name: l_name,
-			first_name: f_name,
-			email: e_mail,
-			phone_number: digits,
-			password: hash
-		  })//printing to console that will say the unexpected EOF error
-		}).then((response) => response.json())
-		.then(Alert.alert("Succesfully made an account!"))
-		.then(this.refs['user'].setNativeProps({text: ''}))
-		.then(this.refs['fn'].setNativeProps({text: ''}))
-		.then(this.refs['ln'].setNativeProps({text: ''}))
-		.then(this.refs['em'].setNativeProps({text: ''}))
-		.then(this.refs['mn'].setNativeProps({text: ''}))
-		.then(this.refs['pw'].setNativeProps({text: ''}))
-		.then(this.refs['cpw'].setNativeProps({text: ''}))
-		.catch((error) =>{console.log(error)})
-		.done();
+			fetch('http://192.168.254.100/insertUser.php',{
+				method: 'POST',
+				headers:{
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					user_name: u_name,
+					last_name: l_name,
+					first_name: f_name,
+					email: e_mail,
+					phone_number: digits,
+					password: hash
+			  })
+				}).then((response) => response.json())
+				.then((responseJson) => {Alert.alert(responseJson);})
+				.then(this.refs['user'].setNativeProps({text: ''}))
+				.then(this.refs['fn'].setNativeProps({text: ''}))
+				.then(this.refs['ln'].setNativeProps({text: ''}))
+				.then(this.refs['em'].setNativeProps({text: ''}))
+				.then(this.refs['mn'].setNativeProps({text: ''}))
+				.then(this.refs['pw'].setNativeProps({text: ''}))
+				.then(this.refs['cpw'].setNativeProps({text: ''}))
+			.catch((error) =>{console.log(error)}) 
+			.done();
 		}
 	}
-	//192.168.254.101 is my local ip address, please change it to your respective local ip address if you want to test 
-
+	//192.168.254.100 is my local ip address, please change it to your respective local ip address 	if you want to test 
 	render() {
 		return (
 			<KeyboardAvoidingView 
@@ -150,7 +149,7 @@ export default class SignUpForm extends Component {
 					<TouchableOpacity 
 						style={styles.buttonContainer}>
 						<Text
-							onPress={this.CheckTextInputIsEmptyOrNot} 
+							onPress={this.CheckTextInputIsEmptyOrNot}
 							style={styles.buttonText}>
 							CREATE ACCOUNT
 						</Text>

@@ -15,5 +15,14 @@
 	$insert = "insert into user(last_name,first_name,phone_number) values ('$last_name','$first_name','$phone_number');";
 	$insert .= "insert into credentials(user_name,email,password) values ('$user_name','$email','$password');";
 	mysqli_multi_query($connection,$insert);
+	if(mysqli_affected_rows($connection) === 0){
+		$failed = "Try again!";
+		$fail = json_encode($fail);
+		echo $fail;	
+	}else{
+		$successful = "You have now created an account!";
+		$success = json_encode($successful);
+		echo $success;
+	}
 	mysqli_close($connection);
 ?>

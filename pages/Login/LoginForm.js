@@ -33,7 +33,7 @@ export default class LoginForm extends Component {
 				}else{
 					var hash = responseJson;
 					if(bcrypt.compareSync(p_word, hash)){
-						Alert.alert("You are now able to log in! =)");//should then navigate to a screen
+						this.props.navigation.navigate('PostFavorForm');
 					}else{
 						Alert.alert("Invalid Username or Email or Password. Please try again!");
 					}

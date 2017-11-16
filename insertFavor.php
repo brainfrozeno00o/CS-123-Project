@@ -11,8 +11,8 @@
 	$location = $obj['location'];
 	$datetime = $obj['datetime'];
 	$payment = $obj['payment'];
-	$insert = "insert into favor(issued_by,description,favor_location,datetime_issued,initial_payment) values ('gio','$description','$location','$datetime','$payment');";
-	mysqli_multi_query($connection,$insert);
+	$insertfavor = "insert into favor(favor_title,issued_by,description,favor_location,datetime_issued,initial_payment) values ('$title','gio','$description','$location','$datetime','$payment');";
+	mysqli_query($connection,$insertfavor);
 	if(mysqli_affected_rows($connection) === 0){
 		$failed = "Try again!";
 		$fail = json_encode($fail);

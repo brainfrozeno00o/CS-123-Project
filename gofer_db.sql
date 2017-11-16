@@ -20,14 +20,12 @@ create table credentials(
 
 create table favor(
 	favor_id int not null unique primary key auto_increment,
-	issued_by int not null,
+	issued_by varchar(500) not null,
 	description varchar(500) not null default '',
 	favor_location varchar(500) not null,
 	/*datetime_issued datetime not null default current_timestamp,*/
 	datetime_issued varchar(255) not null, 
-	intial_payment decimal(10,2) not null default 0.00,
-
-	foreign key(issued_by) references user(user_id)
+	initial_payment bigint not null default 0
 );
 
 create table accepted_favor(

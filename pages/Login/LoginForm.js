@@ -17,7 +17,7 @@ export default class LoginForm extends Component {
 		if(credential === '' || p_word === ''){
 			Alert.alert("Please fill in the necessary fields!");
 		}else{
-			fetch('http://192.168.2.121/loginUser.php',{
+			fetch('http://192.168.0.42/loginUser.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',
@@ -33,7 +33,7 @@ export default class LoginForm extends Component {
 				}else{
 					var hash = responseJson;
 					if(bcrypt.compareSync(p_word, hash)){
-						this.props.navigation.navigate('PostFavorForm');
+						this.props.navigation.navigate('HomePage');
 					}else{
 						Alert.alert("Invalid Username or Email or Password. Please try again!");
 					}
@@ -71,7 +71,8 @@ export default class LoginForm extends Component {
 						ref={(input) => this.passwordInput = input}
 						onChangeText = {p_word => this.setState({p_word})}
 					/>
-					<TouchableOpacity 
+					<TouchableOpacity
+						onPress={this.LoginFunction} 
 						style={styles.buttonContainer}>
 						<Text
 							onPress={this.LoginFunction} 
@@ -79,10 +80,10 @@ export default class LoginForm extends Component {
 							LOGIN 
 						</Text>
 					</TouchableOpacity>
-					<Text 
-						style={styles.signupText}>
-							Not a member yet?
-					</Text>
+						<Text 
+							style={styles.signupText}>
+								Not a member yet?
+						</Text>
 					<TouchableOpacity
 						onPress={() => this.props.navigation.navigate('SignUpForm')}>
 						<Text

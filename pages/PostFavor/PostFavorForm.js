@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar, ScrollView } from 'react-native';
+import { Alert, Navigation, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar, ScrollView } from 'react-native';
 import '../../App';
 
 export default class PostFavorForm extends Component {
@@ -20,7 +20,7 @@ export default class PostFavorForm extends Component {
 		}
 
 		else {
-			fetch('http://192.168.1.1/insertFavor.php',{
+			fetch('http://192.168.0.42/insertFavor.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',
@@ -43,6 +43,9 @@ export default class PostFavorForm extends Component {
 				
 			.catch((error) =>{console.log(error)}) 
 			.done();
+
+			Alert.alert("Your favor has been posted!");
+			this.props.navigation.navigate('HomePage');
 		}
 	}
 
@@ -150,10 +153,11 @@ export default class PostFavorForm extends Component {
 							style={styles.input}
 							onChangeText={pay => this.setState({pay})}
 						/>
-						<TouchableOpacity 
+						<TouchableOpacity
+							onPress={this.CheckTextInputIsEmptyOrNot}	
 							style={styles.buttonContainer}>
 							<Text
-								onPress={this.CheckTextInputIsEmptyOrNot} 
+								onPress={this.CheckTextInputIsEmptyOrNot}	
 								style={styles.buttonText}>
 								POST FAVOR
 							</Text>

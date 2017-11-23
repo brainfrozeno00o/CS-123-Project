@@ -26,7 +26,7 @@ export default class SignUpForm extends Component {
 			Alert.alert("The passwords you have input do not match.");
 		}
 		else {
-			fetch('http://192.168.2.121/insertUser.php',{
+			fetch('http://192.168.0.42/insertUser.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',
@@ -146,7 +146,8 @@ export default class SignUpForm extends Component {
 						style={styles.input}
 						onChangeText={cp_word => this.setState({cp_word})}
 					/>
-					<TouchableOpacity 
+					<TouchableOpacity
+						onPress={this.CheckTextInputIsEmptyOrNot}
 						style={styles.buttonContainer}>
 						<Text
 							onPress={this.CheckTextInputIsEmptyOrNot}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { Alert, KeyboardAvoidingView, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar, ScrollView } from 'react-native';
 import '../../App';
 
 export default class PostFavorForm extends Component {
@@ -20,7 +20,7 @@ export default class PostFavorForm extends Component {
 		}
 
 		else {
-			fetch('http://192.168.2.121/insertFavor.php',{
+			fetch('http://192.168.1.1/insertFavor.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',
@@ -48,102 +48,145 @@ export default class PostFavorForm extends Component {
 
 	render() {
 		return (
-			<KeyboardAvoidingView 
-				behavior="padding" 
-				style={styles.container}>
+			<ScrollView
+				style={styles.contentContainer}	
+				keyboardDismissMode="on-drag">
 
-				<Text
-					style={styles.title}>
-					Post a Favor
-				</Text>
+					<KeyboardAvoidingView
+					behavior="position" 
+					style={styles.container}>
 
-				<View
-					style={styles.infoContainer}>
-					<TextInput
-						ref = {'title'}
-						placeholder="Favor Title"
-						placeholderTextColor="rgba(255,255,255,0.7)"
-						autoCapitalize="none"
-						autoCorrect={false}
-						underlineColorAndroid='transparent'
-						style={styles.input}
-						onChangeText={title => this.setState({title})}
-					/>
-				</View>
+					<Text
+						style={styles.title}>
+						Post a Favor
+					</Text>
 
-				<View
-					style={styles.infoContainer}>
-					<TextInput
-						ref = {'desc'} 
-						placeholder="Favor Description"
-						placeholderTextColor="rgba(255,255,255,0.7)"
-						underlineColorAndroid='transparent'
-						style={styles.multilineinput}
-						autoCorrect={false}
-						multiline = {true}
-						onChangeText={desc => this.setState({desc})}
-					/>
-				</View>
+					<Text
+						style={styles.fieldLabel}>
+						Favor Title
+					</Text>
 
-				<View
-					style={styles.infoContainer}>	
-					<TextInput
-						ref = {'loc'}
-						placeholder="Location"
-						placeholderTextColor="rgba(255,255,255,0.7)"
-						autoCapitalize="none"
-						autoCorrect={false}
-						underlineColorAndroid='transparent'
-						style={styles.input}
-						onChangeText={loc => this.setState({loc})}
-					/>
-					<TextInput
-						ref = {'dt'}
-						placeholder="Date and Time of Favor"
-						placeholderTextColor="rgba(255,255,255,0.7)"
-						autoCapitalize="none"
-						autoCorrect={false}
-						underlineColorAndroid='transparent'
-						style={styles.input}
-						onChangeText={dt => this.setState({dt})}
-					/>
-					<TextInput
-						ref = {'pay'}
-						placeholder="Payment"
-						keyboardType='decimal-pad'
-						placeholderTextColor="rgba(255,255,255,0.7)"
-						autoCapitalize="none"
-						autoCorrect={false}
-						underlineColorAndroid='transparent'
-						style={styles.input}
-						onChangeText={pay => this.setState({pay})}
-					/>
-					<TouchableOpacity 
-						style={styles.buttonContainer}>
+					<View
+						style={styles.infoContainer}>
+						<TextInput
+							ref = {'title'}
+							//placeholder="Favor Title"
+							//placeholderTextColor="rgba(255,255,255,0.7)"
+							autoCapitalize="none"
+							autoCorrect={false}
+							underlineColorAndroid='transparent'
+							style={styles.input}
+							onChangeText={title => this.setState({title})}
+						/>
+					</View>
+
+					<Text
+						style={styles.fieldLabel}>
+						Favor Description
+					</Text>
+
+					<View
+						style={styles.infoContainer}>
+						<TextInput
+							ref = {'desc'} 
+							//placeholder="Favor Description"
+							//placeholderTextColor="rgba(255,255,255,0.7)"
+							underlineColorAndroid='transparent'
+							style={styles.multilineinput}
+							autoCorrect={false}
+							multiline = {true}
+							onChangeText={desc => this.setState({desc})}
+						/>
+					</View>
+
+					<View
+						style={styles.infoContainer}>	
+
 						<Text
-							onPress={this.CheckTextInputIsEmptyOrNot} 
-							style={styles.buttonText}>
-							POST FAVOR
+						style={styles.fieldLabel}>
+						Location
 						</Text>
-					</TouchableOpacity>
-				</View>
-			
-			</KeyboardAvoidingView>
+
+						<TextInput
+							ref = {'loc'}
+							//placeholder="Location"
+							//placeholderTextColor="rgba(255,255,255,0.7)"
+							autoCapitalize="none"
+							autoCorrect={false}
+							underlineColorAndroid='transparent'
+							style={styles.input}
+							onChangeText={loc => this.setState({loc})}
+						/>
+
+						<Text
+							style={styles.fieldLabel}>
+							Date and Time Due
+						</Text>
+
+						<TextInput
+							ref = {'dt'}
+							//placeholder="Date and Time of Favor"
+							//placeholderTextColor="rgba(255,255,255,0.7)"
+							autoCapitalize="none"
+							autoCorrect={false}
+							underlineColorAndroid='transparent'
+							style={styles.input}
+							onChangeText={dt => this.setState({dt})}
+						/>
+
+						<Text
+							style={styles.fieldLabel}>
+							Payment
+						</Text>
+
+						<TextInput
+							ref = {'pay'}
+							//placeholder="Payment"
+							//placeholderTextColor="rgba(255,255,255,0.7)"
+							keyboardType='decimal-pad'
+							autoCapitalize="none"
+							autoCorrect={false}
+							underlineColorAndroid='transparent'
+							style={styles.input}
+							onChangeText={pay => this.setState({pay})}
+						/>
+						<TouchableOpacity 
+							style={styles.buttonContainer}>
+							<Text
+								onPress={this.CheckTextInputIsEmptyOrNot} 
+								style={styles.buttonText}>
+								POST FAVOR
+							</Text>
+						</TouchableOpacity>
+					</View>
+				
+				</KeyboardAvoidingView>
+			</ScrollView>
 		);
 	}
 }
 
 const styles = StyleSheet.create ({
+	contentContainer: { 
+		paddingVertical: 20,
+		backgroundColor: '#3498db'
+	},
 	container: {
 		flex: 1,
 		backgroundColor: '#3498db'
+	},
+	fieldLabel: {
+		fontSize: 17,
+		color: '#FFF',
+		fontWeight: 'bold',
+		marginLeft: 6
 	},
 	title: {
 		marginTop: 40,
 		textAlign: 'center',
 		fontSize: 30,
 		fontWeight: 'bold',
-		color: '#FFF'	
+		color: '#000',
 	},
 	infoContainer: {	
 		justifyContent: 'center',
@@ -163,8 +206,8 @@ const styles = StyleSheet.create ({
 		backgroundColor: 'rgba(255,255,255,0.4)',
 		marginBottom: 10,
 		color: '#FFF',
-		paddingHorizontal: 10,
-		paddingVertical: 10,
+		paddingHorizontal: 7,
+		paddingVertical: 7,
 		marginLeft: 7,
 		marginRight: 7
 	},
@@ -173,8 +216,8 @@ const styles = StyleSheet.create ({
 		backgroundColor: 'rgba(255,255,255,0.4)',
 		marginBottom: 10,
 		color: '#FFF',
-		paddingHorizontal: 10,
-		paddingVertical: 10,
+		paddingHorizontal: 7,
+		paddingVertical: 7,
 		marginLeft: 7,
 		marginRight: 7,
 		fontSize: 17

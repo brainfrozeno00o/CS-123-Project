@@ -7,7 +7,7 @@
 	$json = file_get_contents('php://input');
 	$obj = json_decode($json,true);
 	$currentUser = $obj['currentUser'];
-	$check_query = "select favor_title as 'Title', issued_by as 'Requested By', datetime_issued as 'Due Date', favor_location as 'Location' from favor;";
+	$check_query = "select favor_title as 'title', issued_by as 'requested_by', datetime_issued as 'datetime_issued', favor_location as 'location' from favor;";
 	$getIt = mysqli_query($connection,$check_query);
 	if(mysqli_num_rows($getIt) === 0){
 		$nothingToShow = "No favors to show!";

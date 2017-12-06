@@ -5,27 +5,64 @@ import '../../App';
 export default class HomePage extends Component {
 	constructor(props) {
 		super(props);
-
+		//create array for title, name of user, location, date
 		this.state = {
-			isLoading:true
+			isLoading:true,
+			// currentUser:'Elmo'
 		}
+		var favorTitles = [], favorRequesters = [], favorDateTime = [], favorLocations = []; //you can do it without this, this is for testing
+		fetch('http://192.168.254.104/showAllFavors.php',{ //please change to your corresponding address
+			method: 'POST',
+			headers:{
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				currentUser: 'Elmo', //this is just for the php file
+			})
+		}).then((response) => response.json())
+		.then((responseJson) =>{
+			var favorList = responseJson; //get JSON as a new variable
+			var numberOfFavors = favorList.length; //gets the length of the JSON object
+			console.log(favorList); //will print the whole JSON object
+			for(var key in favorList){ //loop through the JSON Object Array
+				if(favorList.hasOwnProperty(key)){
+					favorTitles.push(favorList[key].title); //get the title
+					favorRequesters.push(favorList[key].requested_by); //get the user of the one who requested the favor
+					favorDateTime.push(favorList[key].datetime_issued); //get the date and time due
+					favorLocations.push(favorList[key].location); //get the location
+				}
+			}
+			for(var j = 0; j < numberOfFavors; j++){ //test if it goes to the array
+				console.log("Favor " + (j + 1) + ": ");
+				console.log("Favor Title: " + favorTitles[j]);
+				console.log("Favor Requested By: " + favorRequesters[j]);
+				console.log("Favor Due Date: " + favorDateTime[j]);
+				console.log("Favor Location: " + favorLocations[j] + "\n");
+			}
+		})
+		.catch((error) => console.log(error))
+		.done();
 	}
 
+
 	getFavors = () => {
-		return fetch('http://192.168.0.42/showAllFavors.php')
-			.then((response) => response.json())
+/*		fetch('http://192.168.254.104/showAllFavors.php',{})
+			.then((response) => console.log(response))
 			.then((responseJson) => {
 				this.setState({
 					isLoading: false,
 					dataSource: responseJson
 				}, function () {
-
+					//console.log(dataSource);
 				})
 			})
 			.catch((error) => {
 				console.error(error);
-			});
+			});*/
+
 	}
+
 
 	FlatListItemSeparator = () => {
 		return (

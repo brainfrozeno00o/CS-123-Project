@@ -96,7 +96,7 @@ export default class HomePage extends Component {
 				style={styles.container}>
 				<Text
 					style={styles.title}>
-					Welcome to Gofer
+					Welcome to Gofer, {this.props.navigation.state.params.name}
 				</Text>
 				<View
 					style = {styles.MainContainer}>

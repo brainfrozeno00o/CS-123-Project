@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Alert, KeyboardAvoidingView, Navigation, ActivityIndicator, FlatList, AppRegistry, StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import '../../App';
-
+var pushedArrays = [];
 export default class HomePage extends Component {
 	constructor(props) {
 		super(props);
+		//create array for title, name of user, location, date
 		this.state = {
 			isLoading:true,
 			dataSource:null
@@ -43,9 +45,15 @@ export default class HomePage extends Component {
 	}
 
 	GetFlatListItem (favor, description){
-		Alert.alert('Favor Title: ' + favor, 'Favor Description: ' + description);
+		Alert.alert('Favor Title: ' + favor, 
+					'Favor Description: ' + description, 
+					[
+						{text: 'Accept', onPress: () => console.log('Test: accepted favor')},
+						{text: 'Back', onPress: () => console.log('Test: favor not accepted')},
+					]
+		);
 	}
-	
+
 	render() {
 		if(this.state.isLoading) {
 			return (
@@ -54,45 +62,70 @@ export default class HomePage extends Component {
 								backgroundColor: '#2980b9',
 								paddingTop: 100,
 							}}>
-					<ActivityIndicator />
+					<ActivityIndicator/>
 				</View>
 			);
-		}
-		return (
-			<KeyboardAvoidingView 
-				behavior="padding" 
-				style={styles.container}>
-				<Text
-					style={styles.title}>
-					Welcome to Gofer, {this.props.navigation.state.params.name}
-				</Text>
-				<View style = {styles.MainContainer}>	
-					<FlatList
-						data = {this.state.dataSource}
-						ItemSeparatorComponent = {this.FlatListItemSeparator}
-						renderItem={({item}) => (
-							<Text style={styles.FlatListItemStyle} 
-							onPress={this.GetFlatListItem.bind(this, item.title, item.description)} >
-							Favor Title: {item.title}{"\n"}
-							Favor Requested By: {item.requested_by}{"\n"}
-							Favor Issued: {item.datetime_issued}{"\n"}
-							Favor Location: {item.location}
+		}else{
+			if(this.state.dataSource === "No favors to show!"){
+				return (
+					<KeyboardAvoidingView 
+						behavior="padding" 
+						style={styles.container}>
+						<Text
+							style={styles.title}>
+							Welcome to Gofer, {this.props.navigation.state.params.name}
+						</Text>
+						<View style = {styles.MainContainer}>		
+		          		</View>
+						<TouchableOpacity
+							onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
+							style={styles.buttonContainer}>
+							<Text
+								onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
+								style={styles.buttonText}>
+								Post a Favor
 							</Text>
-						)}
-						keyExtractor={(item, index) => index}
-					/>				
-          		</View>
-				<TouchableOpacity
-					onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
-					style={styles.buttonContainer}>
-					<Text
-						onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
-						style={styles.buttonText}>
-						Post a Favor
-					</Text>
-				</TouchableOpacity>
-			</KeyboardAvoidingView>
-		);
+						</TouchableOpacity>
+					</KeyboardAvoidingView>
+				);
+			}else{
+				return (
+					<KeyboardAvoidingView 
+						behavior="padding" 
+						style={styles.container}>
+						<Text
+							style={styles.title}>
+							Welcome to Gofer, {this.props.navigation.state.params.name}
+						</Text>
+						<View style = {styles.MainContainer}>	
+							<FlatList
+								data = {this.state.dataSource}
+								ItemSeparatorComponent = {this.FlatListItemSeparator}
+								renderItem={({item}) => (
+									<Text style={styles.FlatListItemStyle} 
+									onPress={this.GetFlatListItem.bind(this, item.title, item.description)} >
+									Favor Title: {item.title}{"\n"}
+									Favor Requested By: {item.requested_by}{"\n"}
+									Favor Issued: {item.datetime_issued}{"\n"}
+									Favor Location: {item.location}
+									</Text>
+								)}
+								keyExtractor={(item, index) => index}
+							/>				
+		          		</View>
+						<TouchableOpacity
+							onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
+							style={styles.buttonContainer}>
+							<Text
+								onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
+								style={styles.buttonText}>
+								Post a Favor
+							</Text>
+						</TouchableOpacity>
+					</KeyboardAvoidingView>
+				);
+			}
+		}
 	}
 }
 

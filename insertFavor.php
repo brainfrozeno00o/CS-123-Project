@@ -7,11 +7,12 @@
 	$json = file_get_contents('php://input');
 	$obj = json_decode($json,true);
 	$title = $obj['title'];
+	$username = $obj['username'];
 	$description = $obj['description'];
 	$location = $obj['location'];
 	$datetime = $obj['datetime'];
 	$payment = $obj['payment'];
-	$insertfavor = "insert into favor(favor_title,issued_by,description,favor_location,datetime_issued,initial_payment) values ('$title','gio','$description','$location','$datetime','$payment');";
+	$insertfavor = "insert into favor(favor_title,issued_by,description,favor_location,datetime_issued,initial_payment) values ('$title','$username','$description','$location','$datetime','$payment');";
 	mysqli_query($connection,$insertfavor);
 	if(mysqli_affected_rows($connection) === 0){
 		$failed = "Try again!";
@@ -24,3 +25,4 @@
 	}
 	mysqli_close($connection);
 ?>
+

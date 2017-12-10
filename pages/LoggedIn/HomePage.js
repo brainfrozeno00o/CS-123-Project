@@ -9,7 +9,7 @@ export default class HomePage extends Component {
 			isLoading:true,
 			dataSource:null
 		}
-		fetch('http://192.168.254.104/showAllFavors.php',{
+		fetch('http://192.168.2.120/showAllFavors.php',{
 			method: 'POST',
 			headers:{
 				'Accept': 'application/json',
@@ -36,7 +36,7 @@ export default class HomePage extends Component {
 				style = {{
 					height: 1,
 					width: "100%",
-					backgroundColor: "#607D8B",
+					backgroundColor: "#2980b9",
 				}}
 			/>
 		);
@@ -112,11 +112,13 @@ const styles = StyleSheet.create ({
 		justifyContent: 'center',
 		flex:1,
 		margin: 10,
+		backgroundColor: '#rgba(255,255,255,0.4)'
 	},
 	FlatListItemStyle: {
     	padding: 10,
     	fontSize: 18,
-    	height: 85,
+		height: 85,
+		color: '#FFF'
  	},
 	buttonContainer: {
 		backgroundColor: '#2980b9',

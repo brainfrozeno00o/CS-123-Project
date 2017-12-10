@@ -20,7 +20,7 @@ export default class PostFavorForm extends Component {
 		}
 
 		else {
-			fetch('http://192.168.254.104/insertFavor.php',{
+			fetch('http://192.168.2.120/insertFavor.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',
@@ -35,7 +35,7 @@ export default class PostFavorForm extends Component {
 					payment: pay
 			  })
 				}).then((response) => response.json())
-				.then((responseJson) => {Alert.alert(responseJson);})
+				// .then((responseJson) => {Alert.alert(responseJson);})
 				.then(this.refs['title'].setNativeProps({text: ''}))
 				.then(this.refs['desc'].setNativeProps({text: ''}))
 				.then(this.refs['loc'].setNativeProps({text: ''}))
@@ -191,7 +191,7 @@ const styles = StyleSheet.create ({
 		textAlign: 'center',
 		fontSize: 30,
 		fontWeight: 'bold',
-		color: '#000',
+		color: '#FFFFFF',
 	},
 	infoContainer: {	
 		justifyContent: 'center',

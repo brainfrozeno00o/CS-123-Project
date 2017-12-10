@@ -26,7 +26,7 @@ export default class SignUpForm extends Component {
 			Alert.alert("The passwords you have input do not match.");
 		}
 		else {
-			fetch('http://192.168.0.42/insertUser.php',{
+			fetch('http://192.168.2.120/insertUser.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',

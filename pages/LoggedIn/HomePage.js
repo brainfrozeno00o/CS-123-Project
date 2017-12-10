@@ -5,64 +5,30 @@ import '../../App';
 export default class HomePage extends Component {
 	constructor(props) {
 		super(props);
-		//create array for title, name of user, location, date
 		this.state = {
 			isLoading:true,
-			// currentUser:'Elmo'
+			dataSource:null
 		}
-		var favorTitles = [], favorRequesters = [], favorDateTime = [], favorLocations = []; //you can do it without this, this is for testing
-		fetch('http://192.168.254.104/showAllFavors.php',{ //please change to your corresponding address
+		fetch('http://192.168.254.104/showAllFavors.php',{
 			method: 'POST',
 			headers:{
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				currentUser: 'Elmo', //this is just for the php file
+				currentUser: 'Elmo',
 			})
 		}).then((response) => response.json())
 		.then((responseJson) =>{
-			var favorList = responseJson; //get JSON as a new variable
-			var numberOfFavors = favorList.length; //gets the length of the JSON object
-			console.log(favorList); //will print the whole JSON object
-			for(var key in favorList){ //loop through the JSON Object Array
-				if(favorList.hasOwnProperty(key)){
-					favorTitles.push(favorList[key].title); //get the title
-					favorRequesters.push(favorList[key].requested_by); //get the user of the one who requested the favor
-					favorDateTime.push(favorList[key].datetime_issued); //get the date and time due
-					favorLocations.push(favorList[key].location); //get the location
-				}
-			}
-			for(var j = 0; j < numberOfFavors; j++){ //test if it goes to the array
-				console.log("Favor " + (j + 1) + ": ");
-				console.log("Favor Title: " + favorTitles[j]);
-				console.log("Favor Requested By: " + favorRequesters[j]);
-				console.log("Favor Due Date: " + favorDateTime[j]);
-				console.log("Favor Location: " + favorLocations[j] + "\n");
-			}
+			this.setState({
+				isLoading:false,
+				dataSource:responseJson,
+			}, function(){
+
+			});
 		})
 		.catch((error) => console.log(error))
-		.done();
 	}
-
-
-	getFavors = () => {
-/*		fetch('http://192.168.254.104/showAllFavors.php',{})
-			.then((response) => console.log(response))
-			.then((responseJson) => {
-				this.setState({
-					isLoading: false,
-					dataSource: responseJson
-				}, function () {
-					//console.log(dataSource);
-				})
-			})
-			.catch((error) => {
-				console.error(error);
-			});*/
-
-	}
-
 
 	FlatListItemSeparator = () => {
 		return (
@@ -76,20 +42,22 @@ export default class HomePage extends Component {
 		);
 	}
 
-
+	GetFlatListItem (favor, description){
+		Alert.alert('Favor Title: ' + favor, 'Favor Description: ' + description);
+	}
+	
 	render() {
-		/*if(this.state.isLoading) {
+		if(this.state.isLoading) {
 			return (
 				<View
 					style = {{ flex: 1,
-								backgroundColor: '#2980b9'
-								paddingTop: 100
+								backgroundColor: '#2980b9',
+								paddingTop: 100,
 							}}>
 					<ActivityIndicator />
 				</View>
 			);
-		}*/
-
+		}
 		return (
 			<KeyboardAvoidingView 
 				behavior="padding" 
@@ -98,13 +66,21 @@ export default class HomePage extends Component {
 					style={styles.title}>
 					Welcome to Gofer, {this.props.navigation.state.params.name}
 				</Text>
-				<View
-					style = {styles.MainContainer}>
+				<View style = {styles.MainContainer}>	
 					<FlatList
-						data = { this.state.dataSource }
+						data = {this.state.dataSource}
 						ItemSeparatorComponent = {this.FlatListItemSeparator}
+						renderItem={({item}) => (
+							<Text style={styles.FlatListItemStyle} 
+							onPress={this.GetFlatListItem.bind(this, item.title, item.description)} >
+							Favor Title: {item.title}{"\n"}
+							Favor Requested By: {item.requested_by}{"\n"}
+							Favor Issued: {item.datetime_issued}{"\n"}
+							Favor Location: {item.location}
+							</Text>
+						)}
 						keyExtractor={(item, index) => index}
-          			/>
+					/>				
           		</View>
 				<TouchableOpacity
 					onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
@@ -140,7 +116,7 @@ const styles = StyleSheet.create ({
 	FlatListItemStyle: {
     	padding: 10,
     	fontSize: 18,
-    	height: 44,
+    	height: 85,
  	},
 	buttonContainer: {
 		backgroundColor: '#2980b9',

@@ -33,7 +33,7 @@ export default class LoginForm extends Component {
 				}else{
 					var hash = responseJson;
 					if(bcrypt.compareSync(p_word, hash)){
-						this.props.navigation.navigate('HomePage');
+						this.props.navigation.navigate('HomePage', {name: credential});
 					}else{
 						Alert.alert("Invalid Username or Email or Password. Please try again!");
 					}

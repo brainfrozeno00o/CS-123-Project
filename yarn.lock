@@ -4518,6 +4518,10 @@ react-native-tab-view@^0.0.69:
   dependencies:
     prop-types "^15.5.8"
 
+react-native-table-component@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-table-component/-/react-native-table-component-1.1.2.tgz#209414dc5a799714a56cc806995c76d2ca61b63b"
+
 react-native-vector-icons@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.1.1.tgz#9ac75bde77d9243346668c51dca7756775428087"

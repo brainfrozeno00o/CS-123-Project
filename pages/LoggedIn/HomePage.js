@@ -107,10 +107,10 @@ export default class HomePage extends Component {
           			/>
           		</View>
 				<TouchableOpacity
-					onPress={() => this.props.navigation.navigate('PostFavorForm')}
+					onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
 					style={styles.buttonContainer}>
 					<Text
-						onPress={() => this.props.navigation.navigate('PostFavorForm')}
+						onPress={() => this.props.navigation.navigate('PostFavorForm', {name: this.props.navigation.state.params.name})}
 						style={styles.buttonText}>
 						Post a Favor
 					</Text>

@@ -20,7 +20,7 @@ export default class PostFavorForm extends Component {
 		}
 
 		else {
-			fetch('http://192.168.0.42/insertFavor.php',{
+			fetch('http://192.168.254.104/insertFavor.php',{
 				method: 'POST',
 				headers:{
 					'Accept': 'application/json',
@@ -28,6 +28,7 @@ export default class PostFavorForm extends Component {
 				},
 				body: JSON.stringify({
 					title: title,
+					username: this.props.navigation.state.params.name,
 					description: desc,
 					location: loc,
 					datetime: dt,
@@ -45,7 +46,7 @@ export default class PostFavorForm extends Component {
 			.done();
 
 			Alert.alert("Your favor has been posted!");
-			this.props.navigation.navigate('HomePage');
+			this.props.navigation.navigate('HomePage', {name: this.props.navigation.state.params.name});
 		}
 	}
 

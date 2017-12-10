@@ -45,7 +45,13 @@ export default class HomePage extends Component {
 	}
 
 	GetFlatListItem (favor, description){
-		Alert.alert('Favor Title: ' + favor, 'Favor Description: ' + description);
+		Alert.alert('Favor Title: ' + favor, 
+					'Favor Description: ' + description, 
+					[
+						{text: 'Accept', onPress: () => console.log('Test: accepted favor')},
+						{text: 'Back', onPress: () => console.log('Test: favor not accepted')},
+					]
+		);
 	}
 
 	render() {
